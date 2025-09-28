@@ -1,0 +1,23 @@
+$TIME_TO_OPEN:60
+
+Self 0 true GetOnBoardComplete not if
+	return
+endif
+	
+<-iLifetime 1 sub ->iLifetime
+1 <-iLifetime asfloat <-TIME_TO_OPEN div sub ->fColorChange
+Self V4(1 1 <-fColorChange sub 1 <-fColorChange sub 1) SetColor
+
+<-iLifetime 0 lte if
+	"Mystery_Box_Opened" TableN("type" "mystery", "pos" Self GetPosition,    2) SendMsg
+	Self true Destroy
+endif
+
+:Once
+	@Init
+:Awake
+	@Init
+:Init
+	once
+		60 ->iLifetime
+	endonce

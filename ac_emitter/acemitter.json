@@ -1,0 +1,32 @@
+{
+	"type": "unit",
+	"enemy": false,
+	"displayname":"AC Emitter",
+	"image": "body.png",
+	"sortingorder": 2,
+	"position": [0, 0],
+	"pivot": [0.5, 0.5],
+	"isbuilt": true,
+	"hasphysics": true,
+	"scripts": [{
+		"name": "acemitter.irpl"
+	}],
+	"creeperdamages": false,
+	"digitalissource": false,
+	"nullifiable": false,
+	"playercandestroy": false,
+	"playercontrolbuildsupply": false,
+	"playercontrolammosupply": false,
+	"damageheal": 50,
+	"controllers": 	[
+						{
+							"name": "ondestroy_sandexplosion",
+							"amt": 500,
+							"minvelocity": 1.5,
+							"maxvelocity": 3,
+							"color0":[0.2, 0.4, 2],
+							"color1":[0.2, 0.6, 2],
+							"sandtype": 98,
+						}
+					]				
+}

@@ -1,0 +1,17 @@
+$interval:30
+$power:-5
+
+
+GetTimer0 eq0 if
+	Self GetPosition ToCell <-power AddCreeper
+	<-interval SetTimer0
+endif
+
+:Once
+	@Init
+:Awake
+	@Init
+:Init
+	once
+		<-interval SetTimer0
+	endonce

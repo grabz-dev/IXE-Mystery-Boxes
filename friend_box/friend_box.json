@@ -1,0 +1,20 @@
+{
+    "type": "unit",
+    "displayname": "Friend Box",
+    "image": "friend_box.png",
+    "position": [0, 0],
+    "pivot": [0.5, 0.5],
+    "permanentinventory": true,
+    "movable": false,
+    "parts": [
+ 
+    ],    	 
+    "controllers": [
+	
+    ],
+	"scripts": [
+		{
+			"name": "friend_box.irpl"
+		}
+	]
+}

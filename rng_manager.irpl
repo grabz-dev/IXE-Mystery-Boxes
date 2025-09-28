@@ -1,0 +1,465 @@
+GetEditMode if
+	once
+		@SeedConfig
+	endonce
+endif
+
+<-*G_lPhantomsToSpawn 0 gt if
+	"$/phantom/phantom" <-*G_lPhantomsToSpawn[0] True CreateUnit pop
+	<-*G_lPhantomsToSpawn 0 RemoveListElement
+endif
+
+GetUpgradeBoost ->iGem
+<-iGem <-iLastGem neq if
+	<-iGem ->iLastGem
+	
+	0.0 ->*G_fGemChance
+	
+	GetUpgradeBoost 5 gte if
+		-1 ->*G_fGemChance
+	endif
+	
+	@GemChanged
+endif
+
+
+
+
+:InitBox
+	TableN (
+		"mystery", TableN (
+			"name" "Mystery Box",
+			"seed" -1,
+			"bucket_weight_total" -1,
+			"buckets" TableN (
+				"reactor" TableN (
+					"weight" 15,
+					"outc_weight_total" -1
+					"outcomes" ListN (
+						TableN (	"type" "inv", 			"weight" 10, 			"id" "$/reactor/reactor"		"amt" 2		"name" "Reactor"				5 )
+					1 )
+				3 )
+				"good" TableN (
+					"weight" 50,
+					"outc_weight_total" -1
+					"outcomes" ListN (
+						TableN (	"type" "unit", 			"weight" 20, 			"id" "$/acoreemitter/acoreemitter"						3 )
+						TableN (	"type" "unit", 			"weight" 20, 			"id" "$/defender/defender"								3 )
+						TableN (	"type" "unit",			"weight" 20,			"id" "$/gunship/gunship"								3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/bobgun/bobgun"									3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/cbomb/cbomb"									3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/coilship/coilship"								3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/cryon/cryon"									3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/digger/digger"									3 )
+						TableN (	"type" "unit", 			"weight" 15, 			"id" "$/duster/duster"									3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/frigate/frigate"								3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/maker/maker"									3 )
+						TableN (	"type" "unit", 			"weight" 20, 			"id" "$/oreminer/oreminer"								3 )
+						TableN (	"type" "unit", 			"weight" 30, 			"id" "$/particulateship/particulateship"				3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/portal/portal"									3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/sentrygun/sentrygun"							3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/spiritship/spiritship"							3 )
+						TableN (	"type" "unit", 			"weight" 5, 			"id" "/aegis_mlrs/aegis"									3 )
+						TableN (	"type" "unit", 			"weight" 5, 			"id" "/minimaker/minimaker"								3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 20  1)					4 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 18  1)					4 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 26  1)					4 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 27  1)					4 )
+					22 )
+				3 )
+				"bad" TableN (
+					"weight" 50
+					"outc_weight_total" -1
+					"outcomes" ListN (
+						TableN (	"type" "creeper", 		"weight" 10, 			"amt" 100000										"evil" true							4 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/emitter/emitter"						"evil_count" true							4 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/cemitter/cemitter"						"evil" true							4 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/enemyspawner/enemyspawner"				"evil_count" true							4 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/particulateemitter/particulateemitter"	"evil_count" true							4 )
+						TableN (	"type" "phantom", 		"weight" 10, 											"evil_count" true							3 )
+						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/thrower/thrower"						"evil_count" true							4 )
+					7 )
+				3 )
+			3 )
+		4 )
+		
+		"friend", TableN (
+			"name" "Friend Box",
+			"seed" -1,
+			"bucket_weight_total" -1,
+			"buckets" TableN (
+				"good" TableN (
+					"weight" 100,
+					"outc_weight_total" -1
+					"outcomes" ListN (
+						TableN (	"type" "unit", 			"weight" 20, 			"id" "$/defender/defender"							3 )
+						TableN (	"type" "unit",			"weight" 10,			"id" "$/gunship/gunship"							3 )
+						TableN (	"type" "inv", 			"weight" 35, 			"id" "$/reactor/reactor"		"amt" 1		"name" "Reactor"				5 )
+						TableN (	"type" "unit", 			"weight" 5, 			"id" "/ac_emitter/acemitter"		"props" TableN("power" -150 "interval" 60  2)				4 )
+					4 )
+				3 )
+			1 )
+		4 )
+	2 ) ->G_tConf
+	
+	@RefreshReferencesAwake
+	
+	
+	<-G_lConf 0 do
+		#Refresh total weight for buckets
+		<-G_lConf[I]{"buckets"} GetTableValues ->ib_lBuckets
+		0 ->ib_iTotalWeight
+		<-ib_lBuckets 0 do
+			<-ib_iTotalWeight <-ib_lBuckets[I]{"weight"} add ->ib_iTotalWeight
+		loop
+		<-G_lConf[I] "bucket_weight_total" <-ib_iTotalWeight SetTableElement
+		
+		
+		#Refresh total weight for bucket outcomes
+		<-ib_lBuckets 0 do
+			<-ib_lBuckets[I] ->ib_tBucket
+			0 ->ib_iTotalWeight
+			<-ib_tBucket{"outcomes"} 0 do
+				<-ib_iTotalWeight <-ib_tBucket{"outcomes"}[I]{"weight"} add ->ib_iTotalWeight
+			loop
+			<-ib_tBucket "outc_weight_total" <-ib_iTotalWeight SetTableElement
+		loop
+	loop
+:RefreshReferencesAwake
+	<-G_tConf GetTableValues ->G_lConf
+:BoxOpened
+	<-_DATA{"type"} ->bo_sType
+	<-_DATA{"pos"} ->bo_vPos
+	
+	<-_DATA{"type"} "mystery" eq if
+		<-bo_sType @RandFloatSeeded <-*G_fGemChance 100.0 div lte if
+			"$/upgradegem/upgradegem" <-bo_vPos True CreateUnit ->bo_iUID
+			0.0 ->*G_fGemChance
+			GetUpgradeBoost 5 gte if
+				-1 ->*G_fGemChance
+			endif
+			@GemChanged
+			return
+		else <-*G_fGemChance -1 gt if
+			<-*G_fGemChance 1.5 add ->*G_fGemChance
+			@GemChanged
+		endif endif
+	
+	
+		<-*G_iMysteryBoxOpened 1 add ->*G_iMysteryBoxOpened
+		0.15 <-*G_iMysteryBoxOpened mul 1 add ->*G_fEvilMulti
+		@MysteryChanged
+	endif
+	
+	
+	
+	<-G_tConf{<-bo_sType} ->bo_tBox
+	<-bo_tBox{"buckets"} GetTableValues ->bo_lBuckets
+	<-bo_tBox{"bucket_weight_total"} ->bo_tBucketWeightTotal
+
+	#Choose bucket
+	<-bo_sType 0 <-bo_tBucketWeightTotal @RandIntSeeded ->bo_iRand
+	null ->bo_tSelBucket
+	0 ->bo_iCountW
+	<-bo_lBuckets 0 do
+		<-bo_iCountW <-bo_lBuckets[I]{"weight"} add ->bo_iCountW
+		<-bo_iRand <-bo_iCountW lt if
+			<-bo_lBuckets[I] ->bo_tSelBucket
+			break
+		endif
+	loop
+	
+	
+	
+	
+	
+	<-bo_tSelBucket{"outcomes"} ->bo_lOutc
+	<-bo_tSelBucket{"outc_weight_total"} ->bo_iTotW
+	
+	#Choose outcome
+	<-bo_sType 0 <-bo_iTotW @RandIntSeeded ->bo_iRand
+	
+	null ->bo_tSelOutc
+	0 ->bo_iCountW
+	<-bo_lOutc 0 do
+		<-bo_iCountW <-bo_lOutc[I]{"weight"} add ->bo_iCountW
+		<-bo_iRand <-bo_iCountW lt if
+			<-bo_lOutc[I] ->bo_tSelOutc
+			break
+		endif
+	loop
+	
+	1 ->bo_iSpawnCount
+	<-bo_tSelOutc{"evil_count"} if
+		<-*G_fEvilMulti floor ->bo_iSpawnCount
+	endif
+	
+	<-bo_tSelOutc{"type"} "phantom" eq if
+		<-bo_iSpawnCount 0 do
+			<-*G_lPhantomsToSpawn <-bo_vPos AppendToList
+		loop
+	else <-bo_tSelOutc{"type"} "unit" eq if
+		<-bo_iSpawnCount 0 do
+			<-bo_tSelOutc{"id"} <-bo_vPos True CreateUnit ->bo_iUID
+			
+			
+			<-bo_tSelOutc{"id"} "$/cemitter/cemitter" eq if
+				100.0 ->bo_fAmt
+				<-bo_tSelOutc{"evil"} if
+					<-bo_fAmt <-*G_fEvilMulti mul ->bo_fAmt
+				endif
+				
+				SetControllerArg(<-bo_iUID "cemitter" "productionAmt" <-bo_fAmt) 
+				SetControllerArg(<-bo_iUID "cemitter" "productionInterval" 2) 
+			endif
+			
+			<-bo_tSelOutc{"id"} "$/thrower/thrower" eq if
+				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "fire_pos" 0 512 RandInt 0 512 RandInt V2 ) 
+				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "fire_delay" 1 ) 
+				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "fire_spread" 20 ) 
+				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "particle_count" 10 ) 
+				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "fire_amt_per_particle" 3 ) 
+			endif
+			
+			<-bo_tSelOutc{"props"} null neq if
+				<-bo_tSelOutc{"props"} GetTableKeys ->bo_lKeys
+				<-bo_lKeys 0 do
+					<-bo_iUID ""  <-bo_lKeys[I] <-bo_tSelOutc{"props"}{<-bo_lKeys[I]} SetScriptVar
+				loop
+			endif
+		loop
+	else <-bo_tSelOutc{"type"} "creeper" eq if
+		<-bo_tSelOutc{"amt"} ->bo_fAmt
+		<-bo_tSelOutc{"evil"} if
+			<-bo_fAmt <-*G_fEvilMulti mul ->bo_fAmt
+		endif
+		
+		FALSE ->bo_bIsAC
+		<-bo_fAmt 0 lt if
+			TRUE ->bo_bIsAC
+		endif
+		<-bo_fAmt abs ->bo_fAmt
+		
+		<-bo_fAmt 2000 49 mul gte if
+			4 ->bo_iRadius
+			<-bo_fAmt 81.0 div ->bo_fAmt
+		else <-bo_fAmt 2000 25 mul gte if
+			3 ->bo_iRadius
+			<-bo_fAmt 49.0 div ->bo_fAmt
+		else <-bo_fAmt 2000 9 mul gte if
+			2 ->bo_iRadius
+			<-bo_fAmt 25.0 div ->bo_fAmt
+		else <-bo_fAmt 2000 1 mul gte if
+			1 ->bo_iRadius
+			<-bo_fAmt 9.0 div ->bo_fAmt
+		else
+			0 ->bo_iRadius
+		endif endif endif endif
+		
+		<-bo_bIsAC if
+			<-bo_fAmt -1 mul ->bo_fAmt
+		endif
+		
+		<-bo_vPos.y <-bo_iRadius add 1 add <-bo_vPos.y <-bo_iRadius sub do
+			<-bo_vPos.x <-bo_iRadius add 1 add <-bo_vPos.x <-bo_iRadius sub do
+				I J <-bo_fAmt AddCreeper
+			loop
+		loop
+	else <-bo_tSelOutc{"type"} "inv" eq if
+		<-bo_tSelOutc{"id"} <-bo_tSelOutc{"amt"} -1 AddPlanToInventory
+		"+ " <-bo_tSelOutc{"name"} concat, <-bo_vPos, 5, 2, 0, "", "", "" ShowBubbleMessage_Sound pop
+	endif endif endif endif
+
+:Once
+	@Init
+:Awake
+	@Init
+:Init
+	once
+		CreateList ->*G_lPhantomsToSpawn
+		0 ->*G_iFriendBoxCounter
+		0 ->*G_iFriendBoxCost
+		0 ->*G_iMysteryBoxOpened
+		1 ->*G_fEvilMulti
+		0 ->*G_fGemChance
+		@InitBox
+		@SeedConfig
+		"Mystery_Box_Opened" "BoxOpened" RegisterForMsg 
+		"Friend_Box_Count_Changed" "FriendChanged" RegisterForMsg
+		CreateTable ->*G_tFriendGUITable
+		CreateTable ->*G_tMysteryGUITable
+		CreateTable ->*G_tGemGUITable
+		AddPlanToInventory("/friend_box/friend_box" 999999 -1) 
+		AddPlanToInventory("/mystery_box/mystery_box" 999999 -1) 
+	endonce
+	@RefreshReferencesAwake
+	CreateUI("friend_gui", @UIFriendJSON, <-*G_tFriendGUITable) ->result ->resultString
+	CreateUI("mystery_gui", @UIMysteryJSON, <-*G_tMysteryGUITable) ->result ->resultString
+	CreateUI("gem_gui", @UIGemJSON, <-*G_tGemGUITable) ->result ->resultString
+	@FriendChanged
+	@MysteryChanged
+	@GemChanged
+# -
+# Description: Generate a random seed for every box type in the config.
+# Arguments: 
+# Result: 
+:SeedConfig 
+	#Seed built-in RNG.
+	ElapsedTime 10000 mod 0 do
+		RandFloat pop 
+	loop
+	
+	<-G_lConf 0 do
+		<-G_lConf[I] "seed" 1 10000000 RandInt SetTableElement
+	loop
+	
+# s1 i1 i2 - i3
+# Description: Generate a random integer between min (inclusive) or max (exclusive) using a box's current seed and increment the seed.
+# Arguments: The name of the current box, min, max
+# Result: Random int
+:RandIntSeeded
+	->RIS_iMaxExcl
+	->RIS_iMinIncl
+	@RandFloatSeeded ->RIS_iRand
+	
+	<-RIS_iMaxExcl <-RIS_iMinIncl sub <-RIS_iRand mul floor <-RIS_iMinIncl add
+
+# s1 - f1
+# Description: Generate a random float between 0 and 1 using a box's current seed and increment the seed.
+# Arguments: The name of the current box
+# Result: Random float
+:RandFloatSeeded
+	->RFS_sType
+	
+	<-G_tConf{<-RFS_sType}{"seed"} ->RFS_iSeed
+	<-RFS_iSeed sin 10000.0 mul ->RFS_fVal
+	
+	#Increment seed.
+	<-G_tConf{<-RFS_sType} "seed" <-RFS_iSeed 1 add SetTableElement
+	
+	<-RFS_fVal <-RFS_fVal floor sub
+:FriendChanged
+	<-*G_tFriendGUITable "friend_total" "Total: " <-*G_iFriendBoxCounter concat SetTableElement
+	<-*G_tFriendGUITable "friend_cost" "Next Cost: " <-*G_iFriendBoxCost concat SetTableElement
+:MysteryChanged
+	<-*G_tMysteryGUITable "mystery_opened" "Opened: " <-*G_iMysteryBoxOpened concat SetTableElement
+	<-*G_tMysteryGUITable "evil_mult" "Evil Multi: " <-*G_fEvilMulti 100.0 mul floor 100.0 div concat SetTableElement
+:GemChanged
+	<-*G_fGemChance -1 eq if
+		<-*G_tGemGUITable "gem_chance" "Full Power" SetTableElement
+	else
+		<-*G_tGemGUITable "gem_chance" "Chance: " <-*G_fGemChance 100.0 mul floor 100.0 div "%" concat3 SetTableElement
+	endif
+:UIGemJSON
+	"{
+		'anchor': [0, 0],
+		'pos': [0, 187],
+		'pivot': [0, 0],
+		'width': 386,
+		'height': 0,
+		'bgcolor': '#00000000',
+		'Components': 	[
+							{
+								'type': 'image', 
+								'pos': [0, -47], 
+								'width': 186, 
+								'height': 47,
+								'image': 'ui_panel_gem.png',
+							},
+							{
+								'type': 'image', 
+								'pos': [4, -38], 
+								'width': 34, 
+								'height': 34,
+								'image': 'upgrade_gem.png',
+							},
+							{
+								'type': 'text', 
+								'pos': [42, -31],
+								'color': '#fff',
+								'text': 'Chance:',
+								'name': 'gem_chance',
+							}
+						]
+ 
+	}"	
+:UIMysteryJSON
+	"{
+		'anchor': [0, 0],
+		'pos': [0, 140],
+		'pivot': [0, 0],
+		'width': 386,
+		'height': 0,
+		'bgcolor': '#00000000',
+		'Components': 	[
+							{
+								'type': 'image', 
+								'pos': [0, -70], 
+								'width': 186, 
+								'height': 70,
+								'image': 'ui_panel_friend.png',
+							},
+							{
+								'type': 'image', 
+								'pos': [4, -38], 
+								'width': 34, 
+								'height': 34,
+								'image': 'mystery_box/mystery_box.png',
+							},
+							{
+								'type': 'text', 
+								'pos': [42, -31],
+								'color': '#fff',
+								'text': 'Opened:',
+								'name': 'mystery_opened',
+							},
+							{
+								'type': 'text', 
+								'pos': [4, -60],
+								'color': '#fff',
+								'text': 'Evil Multi:',
+								'name': 'evil_mult',
+							},	
+						]
+ 
+	}"	
+:UIFriendJSON
+	"{
+		'anchor': [0, 0],
+		'pos': [0, 70],
+		'pivot': [0, 0],
+		'width': 386,
+		'height': 0,
+		'bgcolor': '#00000000',
+		'Components': 	[
+							{
+								'type': 'image', 
+								'pos': [0, -70], 
+								'width': 186, 
+								'height': 70,
+								'image': 'ui_panel_friend.png',
+							},
+							{
+								'type': 'image', 
+								'pos': [4, -38], 
+								'width': 34, 
+								'height': 34,
+								'image': 'friend_box/friend_box.png',
+							},
+							{
+								'type': 'text', 
+								'pos': [42, -31],
+								'color': '#fff',
+								'text': 'Total:',
+								'name': 'friend_total',
+							},
+							{
+								'type': 'text', 
+								'pos': [4, -60],
+								'color': '#fff',
+								'text': 'Next Cost:',
+								'name': 'friend_cost',
+							},	
+						]
+ 
+	}"	

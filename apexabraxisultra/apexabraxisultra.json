@@ -1,0 +1,31 @@
+{
+	"type": "unit",
+	"displayname": "Apex Ultra",
+	"permanentinventory": true,
+	"isapex": true,
+	"isportal": false,
+	"image": "body.png",
+	"position": [0, 0],
+	"pivot": [0.5, 0.5],
+	"maxammo": 500,
+	"movable": true,
+	"isbuilt": true,
+	"powergeneration": [0.01, 0.1, 3600],
+	"powerdispatchstoremax": 1,
+	"parts": [
+				{"part": "$/weapon_lathe/weapon_lathe.json", "position": [5, -4]},
+				{"part": "$/weapon_rocket/weapon_rocket.json", "position": [4, 0]},
+				{"part": "$/weapon_rocket/weapon_rocket.json", "position": [-5, 0]},
+				{"part": "$/weapon_cannon/weapon_cannon.json", "position": [15, -1.5]},
+				{"part": "$/weapon_cannon/weapon_cannon.json", "position": [10, -1.5]},
+				{"part": "$/weapon_cannon/weapon_cannon.json", "position": [6, -3]},
+				{"part": "$/weapon_sentrygun/weapon_sentrygun.json", "position": [-1, -4]},
+				{"part": "$/weapon_sentrygun/weapon_sentrygun.json", "position": [-6, -4]},
+				{"part": "$/weapon_particulategun/weapon_particulategun.json", "position": [-9, -3]},
+				{"part": "$/weapon_particulategun/weapon_particulategun.json", "position": [-9, 0]},
+				{"part": "$/weapon_particulategun/weapon_particulategun.json", "position": [-9, 3]},
+			 ],
+	"controllers": 	[
+						{"name": "ondestroy_sandexplosion"}
+					]			 
+}

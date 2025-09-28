@@ -1,0 +1,31 @@
+{
+    "type": "unit",
+    "displayname":"Minimaker",
+    "image": "body.png",
+    "position": [0, 0],
+    "pivot": [0.5, 0.5],
+    "maxcammo": 9000,
+	"maxammo": 100,
+	"cammorequesttime":0,
+	"ammorequesttime":10,
+	"permanentinventory":true,
+    "movable": true,
+    "parts": [
+                {"part": "$/weapon_maker/weapon_maker.json", "position": [6, -1]},
+                {"part": "$/weapon_maker/weapon_maker.json", "position": [3.5, -3.5]},
+				{"part": "$/weapon_maker/weapon_maker.json", "position": [1, 5]},
+				{"part": "$/weapon_sentrygun/weapon_sentrygun.json", "position": [-2, -3]}
+             ],    
+             
+    "controllers":    [
+                        {
+                            "name": "ondestroy_sandexplosion",
+                            "amt": 500,
+                            "minvelocity": 1.5,
+                            "maxvelocity": 3,
+                            "color0":[0.2, 0.4, 2],
+                            "color1":[0.2, 0.6, 2],
+                            "sandtype": 98,
+                        }
+                    ],
+}

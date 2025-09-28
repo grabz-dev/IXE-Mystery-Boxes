@@ -1,0 +1,9 @@
+{
+	"type": "global",
+	"scripts": [
+		{
+			"name": "rng_manager.irpl",
+			"run_when_paused" : false
+		},
+	]
+}

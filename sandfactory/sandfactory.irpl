@@ -1,0 +1,20 @@
+$SANDTOCREATE:18
+$DELAY:6
+$COST:0.075
+
+if (<-count 0 <=)
+	GetAmmo(self) ->ammo
+	if (<-ammo <-COST >=)
+		GetPosition(self) ->pos
+		GetSand(<-pos.x <-pos.y) ->sand
+		#if (<-sand 255 ==)
+			CreateSand(<-pos.x <-pos.y 1 - <-SANDTOCREATE)
+		#endif
+		<-DELAY ->count
+		<-ammo <-COST - ->ammo
+		SetAmmo(self <-ammo)
+	endif	
+else
+	<-count 1 - ->count
+endif	
+

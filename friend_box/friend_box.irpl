@@ -1,0 +1,62 @@
+$TIME_TO_OPEN:60
+
+Self 0 true GetOnBoardComplete not if
+	return
+endif
+
+GetMousePos ->vMousePos
+Self GetPosition ->vPos
+
+#I know this isn't the greatest, but I don't expect too many of this unit to be placed at once
+<-vMousePos.x <-vPos.x <-iHoverRectHalfSize sub gte
+<-vMousePos.x <-vPos.x <-iHoverRectHalfSize add lte and
+<-vMousePos.y <-vPos.y <-iHoverRectHalfSize sub gte and
+<-vMousePos.y <-vPos.y <-iHoverRectHalfSize add lte and if
+	<-iBubbleUID -1 eq if
+		Self GetAmmo "/" Self GetMaxAmmo concat3, Self GetPosition, 0, 1, 0, "", "", "" ShowBubbleMessage_Sound ->iBubbleUID
+	endif
+else
+	@CloseHoverBubble
+endif
+
+Self GetAmmo Self GetMaxAmmo lt if
+	return
+endif
+	
+<-iLifetime 1 sub ->iLifetime
+1 <-iLifetime asfloat <-TIME_TO_OPEN div sub ->fColorChange
+Self V4(1 1 <-fColorChange sub 1 <-fColorChange sub 1) SetColor
+
+<-iLifetime 0 lte if
+	"Mystery_Box_Opened" TableN("type" "friend", "pos" Self GetPosition,    2) SendMsg
+	true ->bOpened
+	Self true Destroy
+endif
+
+:Once
+	@Init
+:Awake
+	@Init
+:Init
+	once
+		-1 ->iBubbleUID
+		10 ->iHoverRectHalfSize
+		<-*G_iFriendBoxCounter 1 add 2.5 pow ceil ->*G_iFriendBoxCost
+		Self <-*G_iFriendBoxCost SetMaxAmmo
+		false ->bOpened
+		<-*G_iFriendBoxCounter 1 add ->*G_iFriendBoxCounter
+		"Friend_Box_Count_Changed" "" SendMsg
+		60 ->iLifetime
+	endonce
+:Destroyed
+	@CloseHoverBubble
+	<-bOpened not if
+		<-*G_iFriendBoxCounter 1 sub ->*G_iFriendBoxCounter
+		"Friend_Box_Count_Changed" "" SendMsg
+	endif
+:CloseHoverBubble
+	<-iBubbleUID -1 neq if
+		<-iBubbleUID CloseBubbleMessage
+		-1 ->iBubbleUID
+	endif
+	

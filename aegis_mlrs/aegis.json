@@ -1,0 +1,30 @@
+{
+    "type": "unit",
+    "displayname":"Aegis MLRS",
+    "image": "AegisMLRSBody.png",
+    "position": [0, 0],
+    "pivot": [0.5, 0.5],
+    "maxammo": 75,
+    "movable": true,
+	"permanentinventory":true,
+    "parts": [
+                {"part": "$/weapon_rocket/weapon_rocket.json", "position": [-8.5, 3.25]},
+                {"part": "$/weapon_rocket/weapon_rocket.json", "position": [-8.5, -3.25]},
+                {"part": "$/weapon_rocket/weapon_rocket.json", "position": [-2, 3.25]},
+                {"part": "$/weapon_rocket/weapon_rocket.json", "position": [-2, -3.25]},
+                {"part": "$/weapon_rocket/weapon_rocket.json", "position": [4.5, 3.25]},
+                {"part": "$/weapon_rocket/weapon_rocket.json", "position": [4.5, -3.25]},
+             ],    
+             
+    "controllers":    [
+                        {
+                            "name": "ondestroy_sandexplosion",
+                            "amt": 500,
+                            "minvelocity": 1.5,
+                            "maxvelocity": 3,
+                            "color0":[0.2, 0.4, 2],
+                            "color1":[0.2, 0.6, 2],
+                            "sandtype": 98,
+                        }
+                    ],
+}
