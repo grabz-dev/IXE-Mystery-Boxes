@@ -1,6 +1,10 @@
 $SANDTOCREATE:18
-$DELAY:6
+$DELAY:50
 $COST:0.075
+
+Self 0 true GetOnBoardComplete not if
+	return
+endif
 
 if (<-count 0 <=)
 	GetAmmo(self) ->ammo

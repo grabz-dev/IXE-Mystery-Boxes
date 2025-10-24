@@ -1,0 +1,250 @@
+
+
+
+:awake
+	@init
+:once
+	@init
+:init
+	once
+		CreateTable ->UI_Choice_Box
+		SetTableElement(<-UI_Choice_Box, "mystery", "attack")
+		"mystery" ->UI_Cur_Selection
+	
+		RegisterForMSG("UI_EVT_BOX" "UIEVTBOX")
+		RegisterForMSG("UI_EVT_BUCKET" "UIEVTBUCKET")
+		17 ->rowHeight
+		"#ffffff00" ->bgColor
+		"#ffffff" ->bgColorBtn
+		"#77ff77" ->bgColorBtnSelected
+		
+		RegisterForMSG("MB_UI_update" "OnUpdate")
+		200 ->widthCol1
+		50 ->widthCol2
+		70 ->widthCol3  
+		40 ->widthCol4
+		
+		<-widthCol1 ->xCol1
+		<-widthCol1 <-widthCol2 add ->xCol2
+		<-widthCol1 <-widthCol2 add <-widthCol3 add ->xCol3
+		<-widthCol1 <-widthCol2 add <-widthCol3 add <-widthCol4 add ->xCol4
+		
+"FF0000"
+"FF1000"
+"FF2000"
+"FF3000"
+"FF4000"
+"FF5000"
+"FF6000"
+"FF7000"
+"FF8000"
+"FF9000"
+"FFA000"
+"FFB000"
+"FFC000"
+"FFD000"
+"FFE000"
+"FFF000"
+"FFFF00"
+"F0FF00"
+"E0FF00"
+"D0FF00"
+"C0FF00"
+"B0FF00"
+"A0FF00"
+"90FF00"
+"80FF00"
+"70FF00"
+"60FF00"
+"50FF00"
+"40FF00"
+"30FF00"
+"20FF00"
+"10FF00"
+32 ListN ->lColorList
+	endonce
+:OnUpdate
+	DestroyUI("boxes_full_ui_bg")
+	DestroyUI("boxes_full_ui")
+	CreateTable ->tUI
+	CreateUI("boxes_full_ui" @UIJSON <-tUI) ->iUI pop
+:UIJSON
+	@BuildComponents ->components
+
+	"{
+		'anchor': [1, 0],
+		'pos': [" 0 concat ", " concat <-fY neg  concat "],
+		'pivot': [1, 0],
+		'width': " concat <-xCol4 concat ",
+		'height': 1,
+		'bgcolor': '#ffffff00',
+		'Components': 	" concat <-components concat "
+ 
+	}" concat
+	
+	CreateUI("boxes_full_ui_bg" "{
+		'anchor': [1, 0],
+		'pos': [" 0 concat ", " concat 0  concat "],
+		'pivot': [1, 0],
+		'width': " concat <-xCol4 concat ",
+		'height': " concat <-fY neg concat ",
+		'bgcolor': '#ffffffff',
+		'Components': [] 
+ 
+	}" concat, CreateTable) pop pop
+:BuildComponents
+	"" ->sJSON
+	
+	<-sJSON "[" concat ->sJSON
+
+	.0 ->fY
+	
+	<-*G_tConf GetTableKeys ->confKeys
+	
+	-?UI_Cur_Selection if 
+		<-*G_tConf{<-UI_Cur_Selection}{"buckets"} ->buckets
+		<-buckets GetTableKeys ->bucketsKeys
+		
+		<-buckets{<-UI_Choice_Box <-UI_Cur_Selection GetTableElement} ->bucket
+		<-fY <-rowHeight sub ->fY
+		
+		
+		<-bucket{"outcomes"} ->outcomes
+		
+		<-fY <-rowHeight sub ->fY
+		
+		<-sJSON "{'type': 'text', 
+			'pos': [0, " concat <-fY concat "], 
+			'width': " concat <-widthCol1 concat ", 
+			'height': " concat <-rowHeight concat ",
+			'color':'#000000', 
+			'bgcolor':'" concat <-bgColor concat "',
+			'text':'   Outcome    Weight/Odds   Count'}," concat ->sJSON
+			
+		<-fY <-rowHeight sub ->fY
+		
+		<-outcomes 0 do
+			<-fY <-rowHeight sub ->fY
+			
+			<-outcomes[I]{"locked"} <-*G_fEvilMulti gt ->isLocked
+			
+			<-sJSON "{'type': 'text', 
+			'pos': [0, " concat <-fY concat "], 
+			'width': " concat <-isLocked if <-xCol3 else <-widthCol1 endif concat ", 
+			'height': " concat <-rowHeight concat ",
+			'color':'#000000', 
+			'bgcolor':'" concat <-bgColor concat "',
+			'text':'" concat "   " concat <-outcomes[I]{"name"} concat "'}," concat ->sJSON
+			
+			<-isLocked if
+				<-sJSON "{'type': 'text', 
+				'pos': [" concat <-xCol1 concat ", " concat <-fY concat "], 
+				'width': " concat <-widthCol2 concat ", 
+				'height': " concat <-rowHeight concat ",
+				'color':'#000000', 
+				'bgcolor':'" concat "#00000000" concat "',
+				'text':'" concat "Reach Evil " concat <-outcomes[I]{"locked"} concat "'}," concat ->sJSON
+			endif
+			
+			<-isLocked not if
+			
+				<-sJSON "{'type': 'text', 
+				'pos': [" concat <-xCol1 concat ", " concat <-fY concat "], 
+				'width': " concat <-widthCol2 concat ", 
+				'height': " concat <-rowHeight concat ",
+				'color':'#000000', 
+				'bgcolor':'" concat <-bgColor concat "',
+				'text':'" concat <-outcomes[I]{"real_weight"} concat "'}," concat ->sJSON
+				
+				<-outcomes[I]{"real_weight"} <-bucket{"outc_weight_total"} asfloat div      , 2.0 mul 0.9999 min ->prc
+				<-prc <-lColorList mul floor ->prc
+				<-lColorList[<-prc] ->color
+				
+				
+				<-sJSON "{'type': 'text', 
+				'pos': [" concat <-xCol2 concat ", " concat <-fY concat "], 
+				'width': " concat <-widthCol3 concat ", 
+				'height': " concat <-rowHeight concat ",
+				'color':'#000000', 
+				'bgcolor':'#" concat <-color concat "',
+				'text':'" concat <-outcomes[I]{"real_weight"} <-bucket{"outc_weight_total"} asfloat div 1000.0 mul floor 10.0 div concat "%"  concat "'}," concat ->sJSON
+				
+				<-sJSON "{'type': 'text', 
+				'pos': [" concat <-xCol3 concat ", " concat <-fY concat "], 
+				'width': " concat <-widthCol4 concat ", 
+				'height': " concat <-rowHeight concat ",
+				'color':'#000000', 
+				'bgcolor':'" concat <-bgColor concat "',
+				'text':'" concat <-outcomes[I]{"count"} concat "'}," concat ->sJSON
+			endif
+				
+		loop 
+		
+		<-fY 70.0 sub ->fY
+		<-xCol4 <-bucketsKeys asfloat div ->buttonWidth
+		0 ->curX
+		<-bucketsKeys 0 do
+			<-*G_tConf{<-UI_Cur_Selection}{"buckets"}{<-bucketsKeys[I]}{"weight"} <-*G_tConf{<-UI_Cur_Selection}{"bucket_weight_total"} asfloat div 100 mul floor ->prc
+		
+			<-sJSON "{'type': 'button', 
+			'pos': [" concat <-curX concat ", " concat <-fY concat "], 
+			'width': " concat <-buttonWidth concat ", 
+			'height': 50,
+			'color':'#000000', 
+			'bgcolor':'" concat <-UI_Choice_Box{<-UI_Cur_Selection} <-bucketsKeys[I] eq if <-bgColorBtnSelected else <-bgColorBtn endif concat "',
+			'name':'" concat <-bucketsKeys[I] concat "',
+			'events': ['UI_EVT_BUCKET'],
+			'text':'" concat <-buckets{<-bucketsKeys[I]}{"name"} concat "\n(" concat <-prc concat "%)" concat "'}," concat ->sJSON
+			<-curX <-buttonWidth add ->curX
+		loop
+	endif
+	
+	
+	<-fY 40.0 sub ->fY
+	<-xCol4 <-confKeys asfloat div ->buttonWidth
+	0 ->curX
+	<-confKeys 0 do
+		<-sJSON "{'type': 'button', 
+		'pos': [" concat <-curX concat ", " concat <-fY concat "], 
+		'width': " concat <-buttonWidth concat ", 
+		'height': 40,
+		'color':'#000000', 
+		'bgcolor':'" concat <-confKeys[I] <-UI_Cur_Selection neq -?UI_Cur_Selection not or if <-bgColorBtn else <-bgColorBtnSelected endif concat "',
+		'name':'" concat <-confKeys[I] concat "',
+		'events': ['UI_EVT_BOX'],
+		'data': '" concat <-confKeys[I] concat "',
+		'text':'" concat <-*G_tConf{<-confKeys[I]}{"name"} concat "'}," concat ->sJSON
+		<-curX <-buttonWidth add ->curX
+	loop
+	
+	
+	<-sJSON "]," concat ->sJSON
+	<-sJSON
+	
+:UIEVTBOX
+	-?UI_Choice_Box not if
+		CreateTable ->UI_Choice_Box
+	endif
+	
+	<-UI_Cur_Selection asstring <-_DATA{"name"} eq if
+		--UI_Cur_Selection
+	else
+		
+		<-_DATA{"name"} ->UI_Cur_Selection
+		
+		TableContainsKey(<-UI_Choice_Box, <-_DATA{"name"}) not if
+			<-*G_tConf{<-_DATA{"name"}}{"buckets"} ->t
+			<-t GetTableKeys ->k
+			SetTableElement(<-UI_Choice_Box, <-_DATA{"name"}, <-k[0])
+		endif
+	endif
+	
+	@OnUpdate
+:UIEVTBUCKET
+	SetTableElement(<-UI_Choice_Box <-UI_Cur_Selection <-_DATA{"name"})
+	@OnUpdate
+	
+	
+	
+	
+	

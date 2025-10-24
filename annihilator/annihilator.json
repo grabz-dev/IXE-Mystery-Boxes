@@ -1,0 +1,17 @@
+{
+    "type": "unit",
+    "displayname": "Annihilator",
+    "image": "annihilator.png",
+	"permanentinventory": 1,
+    "position": [0, 0],
+    "pivot": [0.5, 0.5],
+	"maxammo": 50,
+	"movable": false,
+    "parts": [
+ 
+             ],    
+ 
+	"scripts": [
+		{"name": "detonation.irpl"}
+	]
+}

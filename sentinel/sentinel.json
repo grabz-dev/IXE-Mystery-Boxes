@@ -1,0 +1,28 @@
+{
+    "type": "unit",
+    "displayname": "Assault",
+    "image": "sentinel.png",
+	"permanentinventory": 1,
+    "position": [0, 0],
+    "pivot": [0.5, 0.5],
+	"maxammo": 40,
+	"movable": true,
+    "parts": [
+                {"part": "$/weapon_cannon/weapon_cannon.json", "position": [0.5, 2]},
+                {"part": "$/weapon_cannon/weapon_cannon.json", "position": [0.5, -2]},
+                {"part": "$/weapon_cannon/weapon_cannon.json", "position": [-4.5, 2]},
+                {"part": "$/weapon_cannon/weapon_cannon.json", "position": [-4.5, -2]},
+			],    
+ 
+    "controllers":	[
+                        {
+                            "name": "ondestroy_sandexplosion",
+                            "amt": 500,
+                            "minvelocity": 1.5,
+                            "maxvelocity": 3,
+                            "color0":[0.2, 0.4, 2],
+                            "color1":[0.2, 0.6, 2],
+                            "sandtype": 98,
+                        }
+                    ],
+}

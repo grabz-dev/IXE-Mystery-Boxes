@@ -1,0 +1,7 @@
+{
+	"type": "part",
+	"image": "angory.png",
+	"position": [0, 0],
+	"pivot": [0.5, 0.5],
+	"isbuilt": true,
+}

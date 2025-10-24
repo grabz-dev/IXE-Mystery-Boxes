@@ -1,0 +1,26 @@
+{
+    "type": "unit",
+    "displayname":"Burrower",
+    "image": "burrower.png",
+	"permanentinventory": 1,
+    "position": [0, 0],
+    "pivot": [0.5, 0.5],
+	"maxammo": 20,
+	"movable": true,
+    "parts": [
+                {"part": "$/weapon_lathe/weapon_lathe.json", "position": [-1.3, -2.5]},
+				{"part": "$/weapon_sentrygun/weapon_sentrygun.json", "position": [2.5, -1.8]},
+             ],    
+			 
+    "controllers":	[
+                        {
+                            "name": "ondestroy_sandexplosion",
+                            "amt": 100,
+                            "minvelocity": 1.5,
+                            "maxvelocity": 3,
+                            "color0":[0.2, 0.4, 2],
+                            "color1":[0.2, 0.6, 2],
+                            "sandtype": 98,
+                        }
+                    ],
+}

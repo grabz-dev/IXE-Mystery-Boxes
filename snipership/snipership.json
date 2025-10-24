@@ -1,0 +1,20 @@
+{
+    "type": "unit",
+    "displayname": "sniper ship",
+    "permanentinventory": true,
+    "image": "body.png",
+    "position": [ 0, 0 ],
+    "pivot": [ 0.5, 0.5 ],
+	"cost": 10000,
+    "maxammo": 200,
+    "movable": true,
+    "parts": [
+        {
+		    "part": "/railgun/railgun.json",
+            "position": [ 2, -1 ],
+        },
+    ],
+    "controllers": [
+        { "name": "ondestroy_sandexplosion" }
+    ]
+}

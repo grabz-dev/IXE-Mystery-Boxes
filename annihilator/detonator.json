@@ -1,0 +1,14 @@
+{
+	"type": "unit",
+	"displayname": "detonator",
+	"image": "detonator.png",
+	"position": [0, 0],
+	"pivot": [0.5, 0.5],
+	"isbuilt": true,
+	"creeperdamages": false,
+	"sanddamages": false,	
+	"movable": false,
+	"scripts": [
+		{"name": "detonator.irpl"}
+	]
+}

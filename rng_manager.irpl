@@ -1,3 +1,5 @@
+false ->*ValidSave
+
 GetEditMode if
 	once
 		@SeedConfig
@@ -22,10 +24,14 @@ GetUpgradeBoost ->iGem
 	@GemChanged
 endif
 
-
-
-
 :InitBox
+	FALSE ->IB_bHasCopy
+	-?G_tConf if
+		<-G_tConf DeepCopy ->IB_tConfCopy
+		<-IB_tConfCopy GetTableValues ->IB_lConfCopy
+		TRUE ->IB_bHasCopy
+	endif
+
 	TableN (
 		"mystery", TableN (
 			"name" "Mystery Box",
@@ -33,54 +39,74 @@ endif
 			"bucket_weight_total" -1,
 			"buckets" TableN (
 				"reactor" TableN (
+					"name" "Reactor"
 					"weight" 15,
 					"outc_weight_total" -1
 					"outcomes" ListN (
-						TableN (	"type" "inv", 			"weight" 10, 			"id" "$/reactor/reactor"		"amt" 2		"name" "Reactor"				5 )
+						TableN (	"name" "Reactor" "type" "inv", 			"weight" 100, 			"id" "$/reactor/reactor"		"amt" 1		"name" "Reactor"				6 )
 					1 )
-				3 )
-				"good" TableN (
-					"weight" 50,
+				4 )
+				"attack" TableN (
+					"name" "Attack"
+					"weight" 25,
 					"outc_weight_total" -1
 					"outcomes" ListN (
-						TableN (	"type" "unit", 			"weight" 20, 			"id" "$/acoreemitter/acoreemitter"						3 )
-						TableN (	"type" "unit", 			"weight" 20, 			"id" "$/defender/defender"								3 )
-						TableN (	"type" "unit",			"weight" 20,			"id" "$/gunship/gunship"								3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/bobgun/bobgun"									3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/cbomb/cbomb"									3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/coilship/coilship"								3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/cryon/cryon"									3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/digger/digger"									3 )
-						TableN (	"type" "unit", 			"weight" 15, 			"id" "$/duster/duster"									3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/frigate/frigate"								3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/maker/maker"									3 )
-						TableN (	"type" "unit", 			"weight" 20, 			"id" "$/oreminer/oreminer"								3 )
-						TableN (	"type" "unit", 			"weight" 30, 			"id" "$/particulateship/particulateship"				3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/portal/portal"									3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/sentrygun/sentrygun"							3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/spiritship/spiritship"							3 )
-						TableN (	"type" "unit", 			"weight" 5, 			"id" "/aegis_mlrs/aegis"									3 )
-						TableN (	"type" "unit", 			"weight" 5, 			"id" "/minimaker/minimaker"								3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 20  1)					4 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 18  1)					4 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 26  1)					4 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 27  1)					4 )
-					22 )
-				3 )
+						TableN ("name" "Defender"			"type" "unit", 			"weight" 100, 		"id" "$/defender/defender"								4 )
+						TableN ("name" "Gunship"			"type" "unit",			"weight" 100,		"id" "$/gunship/gunship"								4 )
+						TableN ("name" "Burrower"			"type" "unit",			"weight" 100,		"id" "/burrower/burrower"								4 )
+						TableN ("name" "Snowpiercer"		"type" "unit", 			"weight" 100, 		"id" "/snowpiercer/snowpiercer"								4 )
+						TableN ("name" "B.O.B."				"type" "unit", 			"weight" 100, 		"id" "/bobgun/bobgun"									4 )
+						TableN ("name" "T.O.M."				"type" "unit", 			"weight" 100, 		"id" "/sentrygun/sentrygun"							4 )
+						TableN ("name" "Sentinel"			"type" "unit",			"weight" 100,		"id" "/sentinel/sentinel"				"locked" 2.0 						5 )
+						TableN ("name" "Frigate"			"type" "unit", 			"weight" 100, 		"id" "$/frigate/frigate"				"locked" 2.0								5 )
+						TableN ("name" "Cannon Phaser"		"type" "unit",			"weight" 100,		"id" "/cannon_phaser/cannon_phaser"		"locked" 3.0 						5 )
+						TableN ("name" "Cryo Phaser"		"type" "unit",			"weight" 100,		"id" "/cryo_phaser/cryo_phaser"			"locked" 3.0 							5 )
+						TableN ("name" "Sniper"				"type" "unit",			"weight" 50,		"id" "/snipership/snipership"			"locked" 4.0 							5 )
+						TableN ("name" "Aegis MLRS"			"type" "unit", 			"weight" 50, 		"id" "/aegis_mlrs/aegis"				"locked" 4.0								5 )		
+						TableN ("name" "Annihilator"		"type" "inv", 			"weight" 50, 		"id" "/annihilator/annihilator"			"locked" 6.0 "amt" 1 "name" "Annihilator"				7 )
+					13 )
+				4 )
+				"defend" TableN (
+					"name" "Defend"
+					"weight" 20,
+					"outc_weight_total" -1
+					"outcomes" ListN (
+						TableN ("name" "Ore Emitter"		"type" "unit", 			"weight" 100, 		"id" "$/acoreemitter/acoreemitter"						4 )
+						TableN ("name" "Ore Miner"			"type" "unit", 			"weight" 100, 		"id" "$/oreminer/oreminer"								4 )
+						TableN ("name" "AC Emitter"			"type" "unit", 			"weight" 100, 		"id" "/ac_emitter/acemitter"			"props" TableN("power" -150 "interval" 60  2)				5 )
+						TableN ("name" "Conv Bomb"			"type" "inv", 			"weight" 100, 		"id" "$/cbomb/cbomb"			"amt" 1 "name" "CBomb"					6 )
+						TableN ("name" "Coilship"			"type" "unit", 			"weight" 100, 		"id" "$/coilship/coilship"								4 )
+						TableN ("name" "Cryon"				"type" "unit", 			"weight" 100, 		"id" "$/cryon/cryon"									4 )
+						TableN ("name" "Digger"				"type" "unit", 			"weight" 100, 		"id" "$/digger/digger"									4 )
+						TableN ("name" "Duster"				"type" "unit", 			"weight" 100, 		"id" "$/duster/duster"									4 )
+						TableN ("name" "Maker"				"type" "unit", 			"weight" 100, 		"id" "$/maker/maker"									4 )
+						TableN ("name" "Ore Miner"			"type" "unit", 			"weight" 100, 		"id" "$/oreminer/oreminer"								4 )
+						TableN ("name" "Part Ship"			"type" "unit", 			"weight" 100, 		"id" "$/particulateship/particulateship"				4 )
+						TableN ("name" "Portal"				"type" "unit", 			"weight" 100, 		"id" "$/portal/portal"									4 )
+						TableN ("name" "Spirit Ship"		"type" "unit", 			"weight" 100, 		"id" "$/spiritship/spiritship"							4 )
+						TableN ("name" "Minimaker"			"type" "unit", 			"weight" 100, 		"id" "/minimaker/minimaker"								4 )
+						TableN ("name" "Acid Factory"		"type" "unit", 			"weight" 50, 		"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 20  1)					5 )
+						TableN ("name" "Pixelium Factory"	"type" "unit", 			"weight" 50, 		"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 18  1)					5 )
+						TableN ("name" "Nitron Factory"		"type" "unit", 			"weight" 50, 		"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 26  1)					5 )
+						TableN ("name" "Oil Factory"		"type" "unit", 			"weight" 50, 		"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 27  1)					5 )
+						TableN ("name" "Angorium Factory"	"type" "unit", 			"weight" 50, 		"id" "/sandfactory/sandfactory"			"props" TableN("SANDTOCREATE" 75  1)					5 )
+					19 )
+				4 )
 				"bad" TableN (
-					"weight" 50
+					"name" "Evil"
+					"weight" 40
 					"outc_weight_total" -1
 					"outcomes" ListN (
-						TableN (	"type" "creeper", 		"weight" 10, 			"amt" 100000										"evil" true							4 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/emitter/emitter"						"evil_count" true							4 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/cemitter/cemitter"						"evil" true							4 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/enemyspawner/enemyspawner"				"evil_count" true							4 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/particulateemitter/particulateemitter"	"evil_count" true							4 )
-						TableN (	"type" "phantom", 		"weight" 10, 											"evil_count" true							3 )
-						TableN (	"type" "unit", 			"weight" 10, 			"id" "$/thrower/thrower"						"evil_count" true							4 )
+						TableN ("name" "Creeper"			"type" "creeper", 		"weight" 100, 			"amt" 30000										"evil" true							5 )
+						TableN ("name" "Emitter"			"type" "unit", 			"weight" 100, 			"id" "$/emitter/emitter"						"evil_count" true							5 )
+						TableN ("name" "Fixed Emitter"		"type" "unit", 			"weight" 100, 			"id" "$/cemitter/cemitter"						"evil" true							5 )
+						TableN ("name" "Spawner"			"type" "unit", 			"weight" 100, 			"id" "$/enemyspawner/enemyspawner"				"evil_count" true							5 )
+						TableN ("name" "Particulate"		"type" "unit", 			"weight" 100, 			"id" "$/particulateemitter/particulateemitter"	"evil_count" true							5 )
+						TableN ("name" "Phantom"			"type" "phantom", 		"weight" 100, 															"evil_count" true							4 )
+						TableN ("name" "Thrower"			"type" "unit", 			"weight" 100, 			"id" "$/thrower/thrower"						"evil_count" true							5 )
 					7 )
-				3 )
-			3 )
+				4 )
+			4 )
 		4 )
 		
 		"friend", TableN (
@@ -89,47 +115,91 @@ endif
 			"bucket_weight_total" -1,
 			"buckets" TableN (
 				"good" TableN (
+					"name" "Friendly"
 					"weight" 100,
 					"outc_weight_total" -1
 					"outcomes" ListN (
-						TableN (	"type" "unit", 			"weight" 20, 			"id" "$/defender/defender"							3 )
-						TableN (	"type" "unit",			"weight" 10,			"id" "$/gunship/gunship"							3 )
-						TableN (	"type" "inv", 			"weight" 35, 			"id" "$/reactor/reactor"		"amt" 1		"name" "Reactor"				5 )
-						TableN (	"type" "unit", 			"weight" 5, 			"id" "/ac_emitter/acemitter"		"props" TableN("power" -150 "interval" 60  2)				4 )
-					4 )
-				3 )
+						TableN ("name" "Reactor"	"type" "inv", 			"weight" 600, 			"id" "$/reactor/reactor"		"amt" 1		"name" "Reactor"				6 )
+						TableN ("name" "Defender"	"type" "unit", 			"weight" 300, 			"id" "$/defender/defender"								4 )
+						TableN ("name" "Ore Emitter"	"type" "unit", 		"weight" 200, 			"id" "$/acoreemitter/acoreemitter"						4 )
+						TableN ("name" "Ore Miner"	"type" "unit", 			"weight" 200, 			"id" "$/oreminer/oreminer"								4 )
+						TableN ("name" "Maker"	"type" "unit", 				"weight" 100, 			"id" "$/maker/maker"									4 )
+						TableN ("name" "Coilship"	"type" "unit", 			"weight" 100, 			"id" "$/coilship/coilship"								4 )
+						TableN ("name" "Part Ship"	"type" "unit", 			"weight" 100, 			"id" "$/particulateship/particulateship"				4 )
+					7 )
+				4 )
 			1 )
 		4 )
 	2 ) ->G_tConf
 	
-	@RefreshReferencesAwake
+	@OnConfTableChanged
 	
 	
 	<-G_lConf 0 do
 		#Refresh total weight for buckets
 		<-G_lConf[I]{"buckets"} GetTableValues ->ib_lBuckets
+		<-IB_lConfCopy[I]{"buckets"} GetTableValues ->ib_lBucketsCopy
 		0 ->ib_iTotalWeight
 		<-ib_lBuckets 0 do
 			<-ib_iTotalWeight <-ib_lBuckets[I]{"weight"} add ->ib_iTotalWeight
 		loop
 		<-G_lConf[I] "bucket_weight_total" <-ib_iTotalWeight SetTableElement
-		
+		#Put seed back if copy
+		<-IB_bHasCopy if
+			<-G_lConf[I] "seed" <-IB_lConfCopy[I]{"seed"} SetTableElement
+		endif
 		
 		#Refresh total weight for bucket outcomes
+		#refresh count
 		<-ib_lBuckets 0 do
 			<-ib_lBuckets[I] ->ib_tBucket
+			<-ib_lBucketsCopy[I] ->ib_tBucketCopy
 			0 ->ib_iTotalWeight
 			<-ib_tBucket{"outcomes"} 0 do
-				<-ib_iTotalWeight <-ib_tBucket{"outcomes"}[I]{"weight"} add ->ib_iTotalWeight
+				<-ib_tBucket{"outcomes"}[I] ->ib_tOutcome
+				<-ib_tBucketCopy{"outcomes"}[I] ->ib_tOutcomeCopy
+				#calculate final weight
+				<-IB_bHasCopy if 
+					<-ib_tOutcomeCopy{"weight"} <-ib_tOutcomeCopy{"count"}
+				else
+					<-ib_tOutcome{"weight"} <-ib_tOutcome{"count"}
+				endif asfloat 1.0 add div floor 1 max ->ib_tOutcome{"real_weight"}
+				
+				<-ib_tOutcome{"locked"} <-*G_fEvilMulti gt if
+					0 ->ib_tOutcome{"real_weight"}
+				endif
+			
+				<-ib_iTotalWeight <-ib_tOutcome{"real_weight"} add ->ib_iTotalWeight
+				<-ib_tOutcomeCopy{"count"} null eq if
+					<-ib_tOutcome "count" 0 SetTableElement
+				else
+					<-ib_tOutcome "count" <-ib_tOutcomeCopy{"count"} SetTableElement
+				endif
 			loop
 			<-ib_tBucket "outc_weight_total" <-ib_iTotalWeight SetTableElement
 		loop
 	loop
-:RefreshReferencesAwake
+	
+	<-G_lConf trace
+:OnConfTableChanged
 	<-G_tConf GetTableValues ->G_lConf
+	<-G_tConf ->*G_tConf
+	<-G_lConf ->*G_lConf
+:GameLoaded
+	GetGameUpdateCount 0 gt if
+		GetEditMode not if
+			<-*ValidSave not if
+				QuickLoad
+			endif
+		endif
+	endif
+	
 :BoxOpened
 	<-_DATA{"type"} ->bo_sType
 	<-_DATA{"pos"} ->bo_vPos
+	
+	true ->*ValidSave
+	QuickSave
 	
 	<-_DATA{"type"} "mystery" eq if
 		<-bo_sType @RandFloatSeeded <-*G_fGemChance 100.0 div lte if
@@ -147,7 +217,8 @@ endif
 	
 	
 		<-*G_iMysteryBoxOpened 1 add ->*G_iMysteryBoxOpened
-		0.15 <-*G_iMysteryBoxOpened mul 1 add ->*G_fEvilMulti
+		0.12 <-*G_iMysteryBoxOpened mul 1 add ->*G_fEvilMulti
+		@InitBox
 		@MysteryChanged
 	endif
 	
@@ -182,7 +253,7 @@ endif
 	null ->bo_tSelOutc
 	0 ->bo_iCountW
 	<-bo_lOutc 0 do
-		<-bo_iCountW <-bo_lOutc[I]{"weight"} add ->bo_iCountW
+		<-bo_iCountW <-bo_lOutc[I]{"real_weight"} add ->bo_iCountW
 		<-bo_iRand <-bo_iCountW lt if
 			<-bo_lOutc[I] ->bo_tSelOutc
 			break
@@ -204,7 +275,7 @@ endif
 			
 			
 			<-bo_tSelOutc{"id"} "$/cemitter/cemitter" eq if
-				100.0 ->bo_fAmt
+				60.0 ->bo_fAmt
 				<-bo_tSelOutc{"evil"} if
 					<-bo_fAmt <-*G_fEvilMulti mul ->bo_fAmt
 				endif
@@ -215,10 +286,10 @@ endif
 			
 			<-bo_tSelOutc{"id"} "$/thrower/thrower" eq if
 				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "fire_pos" 0 512 RandInt 0 512 RandInt V2 ) 
-				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "fire_delay" 1 ) 
+				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "fire_delay" 5 ) 
 				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "fire_spread" 20 ) 
-				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "particle_count" 10 ) 
-				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "fire_amt_per_particle" 3 ) 
+				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "fire_particle_count" 1 ) 
+				SetControllerArg(<-bo_iUID GetChildren 0 GetListElement "thrower" "fire_amt_per_particle" 75 ) 
 			endif
 			
 			<-bo_tSelOutc{"props"} null neq if
@@ -240,16 +311,16 @@ endif
 		endif
 		<-bo_fAmt abs ->bo_fAmt
 		
-		<-bo_fAmt 2000 49 mul gte if
+		<-bo_fAmt 1000 49 mul gte if
 			4 ->bo_iRadius
 			<-bo_fAmt 81.0 div ->bo_fAmt
-		else <-bo_fAmt 2000 25 mul gte if
+		else <-bo_fAmt 1000 25 mul gte if
 			3 ->bo_iRadius
 			<-bo_fAmt 49.0 div ->bo_fAmt
-		else <-bo_fAmt 2000 9 mul gte if
+		else <-bo_fAmt 1000 9 mul gte if
 			2 ->bo_iRadius
 			<-bo_fAmt 25.0 div ->bo_fAmt
-		else <-bo_fAmt 2000 1 mul gte if
+		else <-bo_fAmt 1000 1 mul gte if
 			1 ->bo_iRadius
 			<-bo_fAmt 9.0 div ->bo_fAmt
 		else
@@ -267,9 +338,12 @@ endif
 		loop
 	else <-bo_tSelOutc{"type"} "inv" eq if
 		<-bo_tSelOutc{"id"} <-bo_tSelOutc{"amt"} -1 AddPlanToInventory
-		"+ " <-bo_tSelOutc{"name"} concat, <-bo_vPos, 5, 2, 0, "", "", "" ShowBubbleMessage_Sound pop
+		"+ " <-bo_tSelOutc{"amt"} concat " " concat <-bo_tSelOutc{"name"} concat, <-bo_vPos, 5, 2, 0, "", "", "" ShowBubbleMessage_Sound pop
 	endif endif endif endif
-
+	
+	<-bo_tSelOutc "count" <-bo_tSelOutc{"count"} 1 add SetTableElement
+	@InitBox
+	SendMsg("MB_UI_update" "") 
 :Once
 	@Init
 :Awake
@@ -292,13 +366,14 @@ endif
 		AddPlanToInventory("/friend_box/friend_box" 999999 -1) 
 		AddPlanToInventory("/mystery_box/mystery_box" 999999 -1) 
 	endonce
-	@RefreshReferencesAwake
+	@OnConfTableChanged
 	CreateUI("friend_gui", @UIFriendJSON, <-*G_tFriendGUITable) ->result ->resultString
 	CreateUI("mystery_gui", @UIMysteryJSON, <-*G_tMysteryGUITable) ->result ->resultString
 	CreateUI("gem_gui", @UIGemJSON, <-*G_tGemGUITable) ->result ->resultString
 	@FriendChanged
 	@MysteryChanged
 	@GemChanged
+	SendMsg("MB_UI_update" "") 
 # -
 # Description: Generate a random seed for every box type in the config.
 # Arguments: 
@@ -355,8 +430,8 @@ endif
 		'anchor': [0, 0],
 		'pos': [0, 187],
 		'pivot': [0, 0],
-		'width': 386,
-		'height': 0,
+		'width': 186,
+		'height': 1,
 		'bgcolor': '#00000000',
 		'Components': 	[
 							{
@@ -388,8 +463,8 @@ endif
 		'anchor': [0, 0],
 		'pos': [0, 140],
 		'pivot': [0, 0],
-		'width': 386,
-		'height': 0,
+		'width': 186,
+		'height': 1,
 		'bgcolor': '#00000000',
 		'Components': 	[
 							{
@@ -428,8 +503,8 @@ endif
 		'anchor': [0, 0],
 		'pos': [0, 70],
 		'pivot': [0, 0],
-		'width': 386,
-		'height': 0,
+		'width': 186,
+		'height': 1,
 		'bgcolor': '#00000000',
 		'Components': 	[
 							{

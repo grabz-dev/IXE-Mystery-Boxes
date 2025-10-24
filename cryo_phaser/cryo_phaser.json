@@ -1,0 +1,26 @@
+{
+    "type": "unit",
+    "displayname": "Cyro Phaser",
+    "permanentinventory": true,
+    "image": "body.png",
+    "position": [ 0, 0 ],
+    "pivot": [ 0.5, 0.5 ],
+	"cost": 16000,
+    "maxammo": 125,
+    "movable": true,
+    "isportal": true,
+	"enemyignore": true,
+	"darkraydamages": false,
+	"sortingorder":-1,
+	"showundercreeper":true,
+	"movelayer": 3,
+    "parts": [
+        {
+		    "part": "/phasercryon/phasercryon.json",
+            "position": [ 6,-2 ],
+        },
+    ],
+    "controllers": [
+        { "name": "ondestroy_sandexplosion" }
+    ]
+}

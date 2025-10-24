@@ -1,0 +1,25 @@
+{
+    "type": "part",
+    "image": "part.png",
+    "position": [ 0, 0 ],
+    "pivot": [ 0.4, 0.5 ],
+    "parts": [
+        {
+        },
+    ],
+    "controllers": [
+		{ "name": "cannon",
+    	  "turbo":false,
+		  "fire_range":40,
+		  "manual_mode":false,
+		  "rotate_speed":12,
+		  "fire_cost":0.1,
+		  "fire_delay":5,
+		  "shot_speed":3,
+		  "max_age":1000,
+		  "shot_damage_count":20,
+		  "shot_damage_distance":7,
+		  "shot_damage":-2000000,
+		  "shot_digitalis_damage":5000000}
+    ]
+}

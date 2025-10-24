@@ -1,0 +1,7 @@
+{
+	"type": "part",
+	"anim": "berserk_anim.png",
+	"position": [0, 0],
+	"pivot": [0.5, 0.5],
+	"isbuilt": true,
+}

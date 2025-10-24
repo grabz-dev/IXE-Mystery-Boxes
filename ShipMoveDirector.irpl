@@ -1,0 +1,23 @@
+once
+	"/phoenix/phoenix"
+	"/apexabraxisultra/apexabraxisultra"
+	"/sentrygun/sentrygun"
+	"/bobgun/bobgun"
+	4 listn ->MoveableUnits
+endonce
+
+if(GetMouseButtonDown(0))
+	GetMousePos ->ClickPos
+	if(<-ClickPos.x gt0 <-ClickPos.x 512 lt <-ClickPos.y gt0 <-ClickPos.y 512 lt and and and)
+		do(<-LastSelected GetListCount 0)
+			if(ListContains(<-MoveableUnits GetName(<-LastSelected[i])))
+				GetScript1Var(<-LastSelected[i] "UnitBeam") ->tempbeam
+				SetScript1Var(<-LastSelected[i] "destination" <-ClickPos)
+				SetBeamStart(<-LastSelected[i] <-tempbeam GetPosition(<-LastSelected[i]))
+				SetBeamEnd(<-LastSelected[i] <-tempbeam <-ClickPos)
+			endif
+		loop
+	endif
+endif
+
+GetSelectedUnits ->LastSelected

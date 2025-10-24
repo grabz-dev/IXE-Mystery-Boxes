@@ -41,7 +41,7 @@ endif
 	once
 		-1 ->iBubbleUID
 		10 ->iHoverRectHalfSize
-		<-*G_iFriendBoxCounter 1 add 2.5 pow ceil ->*G_iFriendBoxCost
+		<-*G_iFriendBoxCounter 1 add 2.0 pow ceil ->*G_iFriendBoxCost
 		Self <-*G_iFriendBoxCost SetMaxAmmo
 		false ->bOpened
 		<-*G_iFriendBoxCounter 1 add ->*G_iFriendBoxCounter

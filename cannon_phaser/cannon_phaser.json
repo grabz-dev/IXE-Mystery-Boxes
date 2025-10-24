@@ -1,0 +1,25 @@
+{
+    "type": "unit",
+    "displayname": "Cannon Phaser",
+    "permanentinventory": true,
+    "image": "body.png",
+    "position": [ 0, 0 ],
+    "pivot": [ 0.5, 0.5 ],
+	"cost": 8000,
+    "maxammo": 125,
+    "movable": true,
+	"enemyignore": true,
+	"darkraydamages": false,
+	"sortingorder":-1,
+	"showundercreeper":true,
+	"movelayer": 3,
+    "parts": [
+        {
+		    "part": "/phasercannon/phasercannon.json",
+            "position": [ 6.5,-2 ],
+        },
+    ],
+    "controllers": [
+        { "name": "ondestroy_sandexplosion" }
+    ]
+}

@@ -1,0 +1,71 @@
+#Original script made by Qople, this is a modification for click movement use.
+
+$moveSpeed:3.0
+$friction:2.0
+
+# ==========================
+if(<checkMove)
+    if(Self true GetOverSand)
+        # Move back
+        Self <pos SetPosition
+        Self <dir SetUnitDirection
+    else
+        if(<checkMove 2 neq)
+            Self GetPosition
+            Self <pos SetPosition
+            >pos
+            <pos SetCameraPosition
+            if(<checkMove 1 eq)
+                Self <pos MoveUnit
+                PlaySound("GalaxyShipMove" 1)
+                <pos dup >pos >lastPos
+            endif
+        endif
+    endif
+    false >checkMove
+endif
+
+@Move
+
+if(<-destination.x gt0)
+	SetBeamStart(self <-UnitBeam GetPosition(self))
+else
+	SetBeamEnabled(self <-UnitBeam 0)
+endif
+
+:Move
+    Self GetPosition >pos
+	if(<-destination.x gt0)
+		<-destination <-pos - ->relativedestination
+		if(<-relativedestination magnitude 3 lt)
+			@CancelDestination
+		else
+			<-relativedestination normalize <-moveSpeed mul ->moveForce
+			Self <moveForce false AddPhysicsForce
+		endif
+	endif
+
+    # Apply a force backwards, much stronger if control is held.
+    if(-?lastPos)
+        <pos <lastPos sub >velocity
+        AddPhysicsForce(Self <velocity if(GetKey("LeftControl" 1)) 5.0 else <friction endif mul neg false)
+    endif
+
+    # Handle rotation back to center, scaled stronger the farther we are from aligned
+    Self GetRotation >rot
+    180 180 <rot sub abs sub >dist  
+    #MoveRotation(Self Self GetRotation 0 <dist 0.1 mul 1.0 add) 
+    Self MoveTowardsAngle(Self GetRotation 0 <dist 0.01 mul 0.01 add) MoveRotation
+    #SetRotation(Self dup GetRotation dup trace dup sign0 1 mul add)
+
+    <pos >lastPos
+
+:Awake
+	CreateBeam(self "basic") ->UnitBeam
+	SetBeamColor(self <-UnitBeam V4(1 1 1 1))
+	SetBeamEnabled(self <-UnitBeam 0)
+	V2(-1 -1) ->destination
+
+:CancelDestination
+	SetBeamEnabled(self <-UnitBeam 0)
+	V2(-1 -1) ->destination

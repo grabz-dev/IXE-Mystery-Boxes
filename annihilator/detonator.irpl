@@ -1,0 +1,19 @@
+$timer:8
+
+once
+	GetPosition(self) ->pos
+endonce
+
+if(<-timer gt0)
+	createsand(<-pos.x <-pos.y 50)
+	<-timer 1 - ->timer
+else
+	destroy(self false)
+endif
+
+:destroyed
+	if(<-timer 0 >)
+		createsand(<-pos.x <-pos.y 50)
+		#CreateUnit("/Ships/Annihilator/detonator" <-pos false) ->dabomb
+		#SetScriptVar(<-dabomb "detonator.irpl" "timer" <-timer 1 -)
+	endif

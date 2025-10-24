@@ -1,0 +1,45 @@
+{
+    "type": "unit",
+    "displayname": "Phoenix",
+    "image": "phoenix.png",
+    "position": [0, 0],
+    "pivot": [0.5, 0.5],
+	"permanentinventory": 1,
+	"powergeneration": [0.01, 0.10, 3600],
+	"isapex": true,
+	"isbuilt": true,
+	"hasphysics": true,
+	"gravityscale": 0,
+	"powerdispatchstoremax": 2500,
+	"maxammo": 25,
+	"movable": false,
+    "parts": [
+                {"part": "$/weapon_cannon/weapon_cannon.json", "position": [19, 7]},
+                {"part": "$/weapon_cannon/weapon_cannon.json", "position": [19, -12]},
+                {"part": "$/weapon_cannon/weapon_cannon.json", "position": [-19, 7]},
+                {"part": "$/weapon_cannon/weapon_cannon.json", "position": [-19, -12]},
+                {"part": "$/weapon_lathe/weapon_lathe.json", "position": [7.75, -2.5]},
+                {"part": "$/weapon_lathe/weapon_lathe.json", "position": [-7.75, -2.5]},
+				{"part": "$/weapon_rocket/weapon_rocket.json", "position": [-16, -2]},
+				{"part": "$/weapon_rocket/weapon_rocket.json", "position": [16, -2]},
+				{"part": "$/weapon_particulategun/weapon_particulategun.json", "position": [-7.5, -11]},
+				{"part": "$/weapon_particulategun/weapon_particulategun.json", "position": [7.5, -11]},
+				{"part": "$/weapon_phantombeam/weapon_phantombeam.json", "position": [ 0, 10
+				] },
+             ],    
+ 
+    "controllers":	[
+                        {
+                            "name": "ondestroy_sandexplosion",
+                            "amt": 500,
+                            "minvelocity": 1.5,
+                            "maxvelocity": 3,
+                            "color0":[0.2, 0.4, 2],
+                            "color1":[0.2, 0.6, 2],
+                            "sandtype": 98,
+                        }
+                    ],
+	"scripts":	[
+					{ "name": "../ShipMovement.irpl", "moveSpeed":1.5}
+				],
+}

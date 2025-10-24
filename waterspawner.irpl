@@ -1,0 +1,9 @@
+GetTimer0 eq0 if
+	CreateSand(511 511 12) 
+	60 SetTimer0
+endif
+
+GetTimer1 eq0 if
+	CreateSand(403 511 12) 
+	97 SetTimer1
+endif

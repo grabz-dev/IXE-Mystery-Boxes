@@ -1,0 +1,8 @@
+if(GetAmmo(self) 49 >)
+	createsand(<-pos.x <-pos.y 50)
+	CreateUnit("/annihilator/detonator" <-pos false) ->dabomb
+	Destroy(self false)
+endif
+
+:once
+	GetPosition(self) ->pos

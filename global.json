@@ -2,7 +2,19 @@
 	"type": "global",
 	"scripts": [
 		{
+			"name": "ui_manager.irpl",
+			"run_when_paused" : true
+		},
+		{
 			"name": "rng_manager.irpl",
+			"run_when_paused" : false
+		},
+		{
+			"name": "ShipMoveDirector.irpl",
+			"run_when_paused" : true
+		},
+		{
+			"name": "waterspawner.irpl",
 			"run_when_paused" : false
 		},
 	]
